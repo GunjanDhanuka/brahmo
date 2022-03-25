@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 class ItemSearchScreen extends StatefulWidget {
+  static const id = "/itemChoiceSearch";
   const ItemSearchScreen({Key? key}) : super(key: key);
 
   @override

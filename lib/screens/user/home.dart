@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:brahmo/screens/general/hmc_developers.dart';
 import 'package:brahmo/screens/item_issue/item_choice_search.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -160,6 +161,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     Widget ScrollableListItemMaker(String imageURL, String tileName, String routeID){
       return InkWell(
+        onTap: (){
+          Navigator.pushNamed(context, routeID);
+        },
         child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -236,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 InkWell(
                   onTap: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ItemSearchScreen()));
+                    Navigator.of(context).pushNamed(ItemSearchScreen.id);
                   },
                   child: Container(
                     width: screenWidth*0.7,
@@ -316,7 +320,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       ScrollableListItemMaker("assets/images/image.jpg", "Current Allotments", "/currentAllotments"),
                       ScrollableListItemMaker("assets/images/image.jpg", "How to Use Brahmo", "/currentAllotments"),
-                      ScrollableListItemMaker("assets/images/image.jpg", "HMC and Developers", "/currentAllotments"),
+                      ScrollableListItemMaker("assets/images/image.jpg", "HMC and Developers", HmcAndDevelopersInfo.id),
                       ScrollableListItemMaker("assets/images/image.jpg", "File Complaints", "/currentAllotments")
                     ],
                   ),

@@ -1,4 +1,7 @@
-import 'package:brahmo/screens/home.dart';
+import 'package:brahmo/screens/general/hmc_developers.dart';
+import 'package:brahmo/screens/main_screen.dart';
+import 'package:brahmo/screens/user/home.dart';
+import 'package:brahmo/screens/item_issue/item_choice_search.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -19,12 +22,16 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Color(0xff6BB156),
         scaffoldBackgroundColor: Color(0xFFF7F6EE)
       ),
-      home: HomeScreen(),
-      
+      home: MainScreen(),
+      routes: {
+        ItemSearchScreen.id : (context) => ItemSearchScreen(),
+        HmcAndDevelopersInfo.id : (context) => HmcAndDevelopersInfo(),
+      },
     );
   }
 }
