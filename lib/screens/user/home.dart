@@ -240,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 InkWell(
                   onTap: (){
-                    Navigator.of(context).pushNamed(ItemSearchScreen.id);
+                    Navigator.of(context).pushNamed(ItemSelectionsScreen.id);
                   },
                   child: Container(
                     width: screenWidth*0.7,
@@ -280,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 InkWell(
                   onTap: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ItemSearchScreen()));
+                    Navigator.of(context).pushNamed(ItemSelectionsScreen.id);
                   },
                   child: Container(
                     padding: EdgeInsets.all(10),

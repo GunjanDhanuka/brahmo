@@ -6,22 +6,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-class ItemSearchScreen extends StatefulWidget {
-  static const id = "/itemChoiceSearch";
-  const ItemSearchScreen({Key? key}) : super(key: key);
+class ItemSelectionsScreen extends StatefulWidget {
+  static const id = "/itemSelection";
+  const ItemSelectionsScreen({Key? key}) : super(key: key);
 
   @override
-  _ItemSearchScreenState createState() => _ItemSearchScreenState();
+  _ItemSelectionsScreenState createState() => _ItemSelectionsScreenState();
 }
 
-class _ItemSearchScreenState extends State<ItemSearchScreen> {
-
+class _ItemSelectionsScreenState extends State<ItemSelectionsScreen> {
   StreamController gridDataController = StreamController();
   String selectedID = "";
   String selectedName = "";
   int selectedIndex = -1;
   int selectedQuantity = 0;
   bool confirmPressed = false;
+
 
   Widget GridItemTileMaker(String itemID,int index,int quantityAvailable, int totalQuantity, String itemName,var screenWidth, var incomingData){
     return Container(
@@ -93,33 +93,42 @@ class _ItemSearchScreenState extends State<ItemSearchScreen> {
 
   Future<void> afterQRShown() async {
     DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.email!).get();
-    Timer timer = Timer.periodic(Duration(seconds: 2), (timer) async {
-      DocumentSnapshot currentUserSnapshot = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.email!).get();
-      if(userSnapshot.get("issue_history").length<currentUserSnapshot.get("issue_history").length){
-        timer.cancel();
-        Navigator.popUntil(context, ModalRoute.withName(ItemSearchScreen.id));
-      }
-    });
   }
 
-  void qrImageToScan(var screenWidth){
-    showDialog(context: context, builder: (context) => AlertDialog(
+  void qrImageToScan(var screenWidth) async {
+    DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.email!).get();
+    showDialog(
+      barrierDismissible: false,
+        context: context,
+        builder: (context) => AlertDialog(
       content: Container(
         width: screenWidth*0.5,
         color: Colors.white,
         alignment: Alignment.center,
-        child: QrImage(
-          data: selectedID.toString() + "/" + selectedQuantity.toString(),
-          size: screenWidth*0.5,
-        ),
+        child: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.email!).snapshots(),
+          builder: (context, AsyncSnapshot snapshot){
+            if(snapshot.hasData){
+              if(userSnapshot.get("issue_history").length<snapshot.data.get("issue_history").length){
+                Navigator.popUntil(context, ModalRoute.withName(ItemSelectionsScreen.id));
+              }
+            }
+            return QrImage(
+              data: selectedID.toString() + "/" + selectedQuantity.toString(),
+              size: screenWidth*0.5,
+            );
+          },
+        )
       )
     ));
+    afterQRShown();
   }
 
   void onConfirmPressed(var screenWidth){
     Widget OkButton(){
       return GestureDetector(
         onTap: (){
+          Navigator.pop(context);
           qrImageToScan(screenWidth);
         },
         child: Text("OK"),
@@ -134,7 +143,10 @@ class _ItemSearchScreenState extends State<ItemSearchScreen> {
         OkButton(),
       ],
     );
-    showDialog(context: context, builder: (context) => alert);
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) => alert);
   }
 
   @override

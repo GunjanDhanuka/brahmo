@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
       ),
       home: AuthScreen(),
       routes: {
-        ItemSearchScreen.id : (context) => ItemSearchScreen(),
+        ItemSelectionsScreen.id : (context) => ItemSelectionsScreen(),
         HmcAndDevelopersInfo.id : (context) => HmcAndDevelopersInfo(),
         AuthScreen.id : (context) => AuthScreen(),
         ItemConfirmScreen.id : (context) => ItemConfirmScreen(),
