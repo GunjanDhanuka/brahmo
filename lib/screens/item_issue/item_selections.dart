@@ -158,6 +158,10 @@ class _ItemSelectionsScreenState extends State<ItemSelectionsScreen> {
         stream: FirebaseFirestore.instance.collection('sports_items').snapshots(),
         builder: (context, AsyncSnapshot snapshot){
           if(snapshot.hasData){
+            selectedQuantity=0;
+            selectedID="";
+            selectedName="";
+            selectedIndex=-1;
             gridDataController.sink.add(snapshot.data);
             return StreamBuilder(
               stream: gridDataController.stream,
