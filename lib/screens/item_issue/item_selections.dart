@@ -113,8 +113,9 @@ class _ItemSelectionsScreenState extends State<ItemSelectionsScreen> {
                 Navigator.popUntil(context, ModalRoute.withName(ItemSelectionsScreen.id));
               }
             }
+            print(selectedID.toString() + "/" + selectedQuantity.toString() + "/" + FirebaseAuth.instance.currentUser!.email!);
             return QrImage(
-              data: selectedID.toString() + "/" + selectedQuantity.toString(),
+              data: selectedID.toString() + "/" + selectedQuantity.toString() + "/" + FirebaseAuth.instance.currentUser!.email!,
               size: screenWidth*0.5,
             );
           },
