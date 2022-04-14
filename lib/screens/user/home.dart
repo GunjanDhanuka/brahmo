@@ -1,11 +1,18 @@
 import 'dart:async';
 
+import 'package:brahmo/globals/myColors.dart';
 import 'package:brahmo/screens/general/hmc_developers.dart';
 import 'package:brahmo/screens/item_issue/item_selections.dart';
+import 'package:brahmo/stores/login_store.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key key}) : super(key: key);
+  static String id = 'home';
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -185,152 +192,198 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: ListView(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                margin: EdgeInsets.only(left: screenWidth*0.08,top: screenWidth*0.04),
-                width: screenWidth*0.2,
-                height: screenWidth*0.08,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(4)
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(right: screenWidth*0.08,top: screenWidth*0.04),
-                width: screenWidth*0.12,
-                height: screenWidth*0.12,
-                decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(screenWidth*0.06)
-                ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: screenWidth*0.08,top: screenWidth*0.1),
-            child: Text("Hey Kunal!",
-              style: TextStyle(
-                fontFamily: "Roboto",
-                fontWeight: FontWeight.w500,
-                fontSize: screenWidth*0.06,
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: screenWidth*0.08,top: screenWidth*0.02),
-            child: Text("Book your slots beforehand",
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                  fontFamily: "Roboto",
-                  fontWeight: FontWeight.w500,
-                  fontSize: screenWidth*0.1
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: screenWidth*0.08),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+    return Consumer<LoginStore>(
+      builder: (_, loginStore, __) {
+        User currentUser = loginStore.firebaseUser;
+        print('User on home:');
+        print(loginStore.userData);
+
+        return SafeArea(
+          child: Scaffold(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            body: ListView(
               children: [
-                InkWell(
-                  onTap: (){
-                    Navigator.of(context).pushNamed(ItemSelectionsScreen.id);
-                  },
-                  child: Container(
-                    width: screenWidth*0.7,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                      borderRadius: BorderRadius.circular(10)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: screenWidth*0.08,top: screenWidth*0.04),
+                      width: screenWidth*0.2,
+                      height: screenWidth*0.08,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(4)
+                      ),
                     ),
-                    padding: EdgeInsets.all(6),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 8),
-                          child: Icon(
-                              Icons.search,
-                            color: Color(0xff4F3A57),
-                            size: screenWidth*0.08,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 7),
-                          child: Text(
-                              "Search Item...",
-                            style: TextStyle(
-                              fontFamily: "poppins",
-                              color: Color(0xff4F3A57),
-                              fontSize: screenWidth*0.045
-                            ),
-                          ),
-                        )
-                      ],
+                    Container(
+                      margin: EdgeInsets.only(right: screenWidth*0.08,top: screenWidth*0.04),
+                      width: screenWidth*0.12,
+                      height: screenWidth*0.12,
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.circular(screenWidth*0.06)
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-                SizedBox(
-                  width: 20,
-                ),
-                InkWell(
-                  onTap: (){
-                    Navigator.of(context).pushNamed(ItemSelectionsScreen.id);
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8)
+                Padding(
+                  padding: EdgeInsets.only(left: screenWidth*0.08,top: screenWidth*0.1),
+                  child: Text("Hey " + loginStore.userData['displayName'],
+                    style: TextStyle(
+                      fontFamily: "Roboto",
+                      fontWeight: FontWeight.w500,
+                      fontSize: screenWidth*0.06,
                     ),
-                    child: Image.asset(
-                        'assets/images/filter.png',
-                      width: screenWidth*0.07,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          demoCarouselBuilder(),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: screenWidth*0.08,vertical: screenWidth*0.04),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                    "Brahmaputra",
-                  style: TextStyle(
-                    fontSize: screenWidth*0.06,
-                    fontFamily: "Inter",
-                    color: Color(0xff717171),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 15),
+                  padding: EdgeInsets.only(left: screenWidth*0.08,top: screenWidth*0.02),
+                  child: Text("Welcome to the Brahmo App!",
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                        fontFamily: "Roboto",
+                        fontWeight: FontWeight.w500,
+                        fontSize: screenWidth*0.1
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: screenWidth*0.08),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ScrollableListItemMaker("assets/images/image.jpg", "Current Allotments", "/currentAllotments"),
-                      ScrollableListItemMaker("assets/images/image.jpg", "How to Use Brahmo", "/currentAllotments"),
-                      ScrollableListItemMaker("assets/images/image.jpg", "HMC and Developers", HmcAndDevelopersInfo.id),
-                      ScrollableListItemMaker("assets/images/image.jpg", "File Complaints", "/currentAllotments")
+                      InkWell(
+                        onTap: (){
+                          //TODO: forward to the Item selection and then generate the QR as required
+                          Navigator.of(context).pushNamed(ItemSelectionsScreen.id);
+                        },
+                        child: Container(
+                          width: screenWidth*0.7,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                            borderRadius: BorderRadius.circular(10)
+                          ),
+                          padding: EdgeInsets.all(6),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 8),
+                                child: Icon(
+                                    Icons.search,
+                                  color: Color(0xff4F3A57),
+                                  size: screenWidth*0.08,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 7),
+                                child: Text(
+                                    "Search Item...",
+                                  style: TextStyle(
+                                    fontFamily: "poppins",
+                                    color: Color(0xff4F3A57),
+                                    fontSize: screenWidth*0.045
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      InkWell(
+                        onTap: (){
+                          Navigator.of(context).pushNamed(ItemSelectionsScreen.id);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          child: Image.asset(
+                              'assets/images/filter.png',
+                            width: screenWidth*0.07,
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
+                demoCarouselBuilder(),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: screenWidth*0.08,vertical: screenWidth*0.04),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                          "Brahmaputra",
+                        style: TextStyle(
+                          fontSize: screenWidth*0.06,
+                          fontFamily: "Inter",
+                          color: Color(0xff717171),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ScrollableListItemMaker("assets/images/image.jpg", "Current Allotments", "/currentAllotments"),
+                            ScrollableListItemMaker("assets/images/image.jpg", "How to Use Brahmo", "/currentAllotments"),
+                            ScrollableListItemMaker("assets/images/image.jpg", "HMC and Developers", HmcAndDevelopersInfo.id),
+                            ScrollableListItemMaker("assets/images/image.jpg", "File Complaints", "/currentAllotments")
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding:
+                  EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                  child: TextButton(
+                    onPressed: () {
+                      loginStore.signOut(context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      elevation: 2.0,
+                      primary: Colors.redAccent,
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.logout,
+                          size: 30,
+                          color: MyColors.white,
+                        ),
+                        Expanded(
+                          child: SizedBox(),
+                        ),
+                        Text(
+                          "Log Out",
+                          style: GoogleFonts.rubik(
+                              color: MyColors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        Expanded(
+                          child: SizedBox(),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
 
-        ],
-      )
+              ],
+            )
+          ),
+        );
+      }
     );
   }
 }

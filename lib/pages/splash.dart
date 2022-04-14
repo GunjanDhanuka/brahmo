@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:brahmo/screens/admin/scanner.dart';
+import 'package:brahmo/screens/user/home.dart';
 import 'package:flutter/material.dart';
 import 'package:brahmo/globals/myColors.dart';
 import 'package:brahmo/globals/myFonts.dart';
@@ -31,7 +33,7 @@ class _SplashState extends State<Splash> {
         .then((result) {
       if (result) {
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (_) => HomeManagement()),
+            MaterialPageRoute(builder: (_) => HomeScreen()),
                 (Route<dynamic> route) => false);
       } else {
         //if not signed-in, redirect to login screen
@@ -40,7 +42,7 @@ class _SplashState extends State<Splash> {
             .then((result2) {
           if (result2) {
             Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (_) => ScanQR()),
+                MaterialPageRoute(builder: (_) => ScannerScreen()),
                     (Route<dynamic> route) => false);
           } else {
             print("WORKS");
@@ -76,11 +78,11 @@ class _SplashState extends State<Splash> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image(
-                image: AssetImage('assets/icons/swc.png'),
-                height: 250,
-                width: 250,
-              ),
+              // Image(
+              //   image: AssetImage('assets/icons/swc.png'),
+              //   height: 250,
+              //   width: 250,
+              // ),
               MySpaces.vMediumGapInBetween,
               MyFonts().largeTitle("IITG Scanner", MyColors.white),
               MySpaces.hSmallGapInBetween,

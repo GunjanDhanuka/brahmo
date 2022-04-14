@@ -3,7 +3,7 @@ import 'package:brahmo/screens/user/home.dart';
 import 'package:brahmo/screens/user/user_profile.dart';
 import 'package:flutter/material.dart';
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  const MainScreen({Key key}) : super(key: key);
 
   @override
   _MainScreenState createState() => _MainScreenState();

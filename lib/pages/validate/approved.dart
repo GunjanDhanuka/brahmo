@@ -13,7 +13,7 @@ class Approved extends StatefulWidget {
 
   final String rollNumber;
 
-  Approved({required this.rollNumber});
+  Approved({@required this.rollNumber});
 
   @override
   createState() => _ApprovedState(rollNumber: rollNumber);
@@ -21,7 +21,7 @@ class Approved extends StatefulWidget {
 
 class _ApprovedState extends State<Approved> {
   String rollNumber;
-  _ApprovedState({required this.rollNumber});
+  _ApprovedState({@required this.rollNumber});
 
   @override
   void initState() {

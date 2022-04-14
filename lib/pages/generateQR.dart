@@ -75,9 +75,9 @@ class _QRGeneratorState extends State<QRGenerator> {
       print(loginStore.userData);
       String userId = currentUser.uid;
       String email = currentUser.email;
-      String? name = loginStore.userData['displayName'];
-      String? degree = loginStore.userData['jobTitle'];
-      String? rollNumber = loginStore.userData['rollNumber'];
+      String name = loginStore.userData['displayName'];
+      String degree = loginStore.userData['jobTitle'];
+      String rollNumber = loginStore.userData['rollNumber'];
       DateTime now = DateTime.now();
       String month = now.month.toString().length == 1
           ? "0" + now.month.toString()
@@ -96,7 +96,7 @@ class _QRGeneratorState extends State<QRGenerator> {
           : now.minute.toString();
       String date =
           now.year.toString() + month + day + "T" + hour + minute + second;
-      qrData = rollNumber! + "," + date + "," + email + "," + userId;
+      qrData = rollNumber + "," + date + "," + email + "," + userId;
       print("here");
       print(DateTime.now());
       print(qrData);
@@ -127,7 +127,7 @@ class _QRGeneratorState extends State<QRGenerator> {
                           ),
                           Container(
                             child: Text(
-                              name!,
+                              name,
                               style: GoogleFonts.rubik(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
@@ -154,7 +154,7 @@ class _QRGeneratorState extends State<QRGenerator> {
                             child: SizedBox(),
                           ),
                           Text(
-                            rollNumber!,
+                            rollNumber,
                             style: GoogleFonts.rubik(
                                 fontSize: 20, fontWeight: FontWeight.w500),
                           ),
@@ -175,7 +175,7 @@ class _QRGeneratorState extends State<QRGenerator> {
                             child: SizedBox(),
                           ),
                           Text(
-                            degree!,
+                            degree,
                             style: GoogleFonts.rubik(
                                 fontSize: 20, fontWeight: FontWeight.w500),
                           ),

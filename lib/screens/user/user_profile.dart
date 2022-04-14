@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 class UserProfile extends StatefulWidget {
-  const UserProfile({Key? key}) : super(key: key);
+  const UserProfile({Key key}) : super(key: key);
 
   @override
   _UserProfileState createState() => _UserProfileState();

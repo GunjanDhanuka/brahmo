@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 class HmcAndDevelopersInfo extends StatefulWidget {
   static const id = "/hmcAndDevelopers";
-  const HmcAndDevelopersInfo({Key? key}) : super(key: key);
+  const HmcAndDevelopersInfo({Key key}) : super(key: key);
 
   @override
   _HmcAndDevelopersInfoState createState() => _HmcAndDevelopersInfoState();

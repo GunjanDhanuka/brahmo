@@ -1,3 +1,4 @@
+import 'package:brahmo/screens/admin/scanner.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +64,7 @@ abstract class LoginStoreBase with Store {
             //   ),
             // ));
             Fluttertoast.showToast(
-                msg: 'You are not a registered Mess Manager.');
+                msg: 'You are not a registered Admin User.');
             isLoginLoading = false;
             isOtpLoading = false;
             Navigator.of(context).pushAndRemoveUntil(
@@ -126,7 +127,7 @@ abstract class LoginStoreBase with Store {
     final AuthCredential _authCredential = PhoneAuthProvider.credential(
         verificationId: actualCode, smsCode: smsCode);
     bool response = await checkPhoneFirebase(enteredContact);
-    print(response.toString() + "Karan");
+    print(response.toString() + "gd");
     if (response == false) {
       print('\n\n\nNOT FOUND\n\n\n');
       // loginScaffoldKey.currentState.showSnackBar(SnackBar(
@@ -137,7 +138,7 @@ abstract class LoginStoreBase with Store {
       //     style: TextStyle(color: Colors.white),
       //   ),
       // ));
-      Fluttertoast.showToast(msg: 'You are not a registered Mess Manager.');
+      Fluttertoast.showToast(msg: 'You are not a registered Admin User.');
       isLoginLoading = false;
       isOtpLoading = false;
       Navigator.of(context).pushAndRemoveUntil(
@@ -147,6 +148,7 @@ abstract class LoginStoreBase with Store {
     }
     //verify phone number
     await _auth.signInWithCredential(_authCredential).catchError((error) {
+      print(error);
       isOtpLoading = false;
       otpScaffoldKey.currentState.showSnackBar(SnackBar(
         behavior: SnackBarBehavior.floating,
@@ -176,7 +178,7 @@ abstract class LoginStoreBase with Store {
     if (await checkPhoneFirebase(firebaseUser.phoneNumber)) {
       print('\n\n\nFound number\n\n\n');
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => ScanQR()),
+          MaterialPageRoute(builder: (_) => ScannerScreen()),
               (Route<dynamic> route) => false);
     } else {
       print('\n\n\nNOT FOUND\n\n\n');
@@ -188,7 +190,7 @@ abstract class LoginStoreBase with Store {
       //     style: TextStyle(color: Colors.white),
       //   ),
       // ));
-      Fluttertoast.showToast(msg: 'You are not a registered Mess Manager.');
+      Fluttertoast.showToast(msg: 'You are not a registered Admin User.');
       isLoginLoading = false;
       isOtpLoading = false;
       Navigator.pop(context);
@@ -199,10 +201,11 @@ abstract class LoginStoreBase with Store {
     isOtpLoading = false;
   }
 
+  //TODO: Create a doc in firestore for storing the phone numbers of admin users
   Future<bool> checkPhoneFirebase(String phoneNumber) async {
-    print('\n\n\nCheckiing in data');
+    print('\n\n\nChecking in data');
     QuerySnapshot querySnapshot =
-    await _firestore.collection('mess_manager').get();
+    await _firestore.collection('admin').get();
     for (QueryDocumentSnapshot doc in querySnapshot.docs) {
       print(phoneNumber);
       print(doc.get('phone').toString());

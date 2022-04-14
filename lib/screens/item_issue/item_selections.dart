@@ -8,7 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 class ItemSelectionsScreen extends StatefulWidget {
   static const id = "/itemSelection";
-  const ItemSelectionsScreen({Key? key}) : super(key: key);
+  const ItemSelectionsScreen({Key key}) : super(key: key);
 
   @override
   _ItemSelectionsScreenState createState() => _ItemSelectionsScreenState();
@@ -92,11 +92,11 @@ class _ItemSelectionsScreenState extends State<ItemSelectionsScreen> {
   }
 
   Future<void> afterQRShown() async {
-    DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.email!).get();
+    DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser.email).get();
   }
 
   void qrImageToScan(var screenWidth) async {
-    DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.email!).get();
+    DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser.email).get();
     showDialog(
       barrierDismissible: false,
         context: context,
@@ -106,16 +106,16 @@ class _ItemSelectionsScreenState extends State<ItemSelectionsScreen> {
         color: Colors.white,
         alignment: Alignment.center,
         child: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.email!).snapshots(),
+          stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser.email).snapshots(),
           builder: (context, AsyncSnapshot snapshot){
             if(snapshot.hasData){
               if(userSnapshot.get("issue_history").length<snapshot.data.get("issue_history").length){
                 Navigator.popUntil(context, ModalRoute.withName(ItemSelectionsScreen.id));
               }
             }
-            print(selectedID.toString() + "/" + selectedQuantity.toString() + "/" + FirebaseAuth.instance.currentUser!.email!);
+            print(selectedID.toString() + "/" + selectedQuantity.toString() + "/" + FirebaseAuth.instance.currentUser.email);
             return QrImage(
-              data: selectedID.toString() + "/" + selectedQuantity.toString() + "/" + FirebaseAuth.instance.currentUser!.email!,
+              data: selectedID.toString() + "/" + selectedQuantity.toString() + "/" + FirebaseAuth.instance.currentUser.email,
               size: screenWidth*0.5,
             );
           },

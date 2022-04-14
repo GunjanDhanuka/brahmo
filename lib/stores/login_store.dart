@@ -1,5 +1,6 @@
 import 'package:aad_oauth/aad_oauth.dart';
 import 'package:aad_oauth/model/config.dart';
+import 'package:brahmo/screens/user/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -40,7 +41,7 @@ abstract class LoginStoreBase with Store {
       if (firebaseUser.phoneNumber != null && firebaseUser.phoneNumber != "")
         return false;
       final prefs = await SharedPreferences.getInstance();
-      print("Got Here");
+      //print("Got Here");
       userData = {};
       userData.addAll({
         'displayName': prefs.getString('displayName') ?? '0',
@@ -83,12 +84,16 @@ abstract class LoginStoreBase with Store {
       var data = jsonDecode(response.body);
       print(data);
       print("data was printed");
-      //check and compare mail and roll number in google sheet and assign hostel to shared prefs
+      //check and compare mail and roll number in local csv file and assign hostel to shared pref
       Map checkedResult = await checkRollMess(data['surname'], data['mail']);
       final prefs = await SharedPreferences.getInstance();
       prefs.setString('displayName', data['displayName']);
       prefs.setString('jobTitle', data['jobTitle']);
       prefs.setString('rollNumber', checkedResult['roll']);
+      // final prefs = await SharedPreferences.getInstance();
+      // prefs.setString('displayName', 'GUNJAN DHANUKA');
+      // prefs.setString('jobTitle', '');
+      // prefs.setString('rollNumber', '200101038');
       print("\n\n\n\nSetting data complete\n\n\n\n");
       final _auth = FirebaseAuth.instance;
 
@@ -131,7 +136,7 @@ abstract class LoginStoreBase with Store {
     });
 
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (_) => HomeManagement()),
+        MaterialPageRoute(builder: (_) => HomeScreen()),
             (Route<dynamic> route) => false);
   }
 
@@ -145,7 +150,7 @@ abstract class LoginStoreBase with Store {
           MaterialPageRoute(builder: (_) => MicrosoftLogin()),
               (Route<dynamic> route) => false);
       firebaseUser = null;
-      userData = null;
+      userData.clear();
     });
   }
 }

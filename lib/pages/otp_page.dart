@@ -7,7 +7,7 @@ import 'package:brahmo/stores/otp_login_store.dart';
 import 'package:brahmo/widgets/loader_hud.dart';
 
 class OtpPage extends StatefulWidget {
-  const OtpPage({Key? key}) : super(key: key);
+  const OtpPage({Key key}) : super(key: key);
   @override
   _OtpPageState createState() => _OtpPageState();
 }

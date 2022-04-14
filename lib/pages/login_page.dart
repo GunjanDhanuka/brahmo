@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
           builder: (_) => LoaderHUD(
             inAsyncCall: otploginStore.isLoginLoading,
             color: Colors.indigo,
-            key: ,
+            key: null,
             child: Scaffold(
               backgroundColor: Colors.white,
               key: otploginStore.loginScaffoldKey,
@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                                           margin: const EdgeInsets.symmetric(
                                               horizontal: 8),
                                           child: Image.asset(
-                                              'assets/icons/iitg.png')),
+                                              'assets/images/profile_icon.png')),
                                     ),
                                   ],
                                 ),
@@ -140,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                                     } else {
                                       otploginStore
                                           .loginScaffoldKey.currentState
-                                          . showSnackBar(SnackBar(
+                                          .showSnackBar(SnackBar(
                                         behavior: SnackBarBehavior.floating,
                                         backgroundColor: Colors.red,
                                         content: Text(

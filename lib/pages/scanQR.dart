@@ -18,7 +18,7 @@ import 'package:brahmo/stores/otp_login_store.dart';
 import 'package:provider/provider.dart';
 
 //The number of minutes upto which the QR would be considered valid
-int maxMinutes = 1;
+int maxMinutes = 3;
 final _firestore = FirebaseFirestore.instance;
 
 class ScanQR extends StatefulWidget {
@@ -43,7 +43,7 @@ class _ScanQRState extends State<ScanQR> {
   String qrScanRes = "";
   String rollNumber = "";
   String email = "";
-  String hostel = "subansiri";
+  String hostel = "brahmaputra";
   bool scanResult = false;
 
   Future<String> scanQRNormal() async {
@@ -56,6 +56,8 @@ class _ScanQRState extends State<ScanQR> {
 
     return qrScanRes;
   }
+
+
 
   // void checkPhoneFirebase(String phoneNumber) async {
   //   bool foundRoll = false;
@@ -235,22 +237,30 @@ class _ScanQRState extends State<ScanQR> {
                                     qrScanRes = _qrScanResult;
                                   });
 
-                                  rollNumber = qrScanRes.split(",")![0];
+                                  //TODO: In future, can add Timestamp to the QR to ensure that no one reuses a QR
+                                  //rollNumber = qrScanRes.split(",")[0];
                                   //Here the string received from the QRCode is in
                                   //the format :
+
+
                                   // '200101038,20210531T010455,d.gunjan@iitg.ac.in,cwJIBDg5s3UGmWmY1i8LAfLYoin1'
                                   //Note that the date string is formatted with a T separator
                                   //between the date and time
                                   String datewithT = qrScanRes.split(",")[1];
-                                  email = qrScanRes.split(",")[2];
                                   String userId = qrScanRes.split(",")[3];
                                   DateTime timeScanned = DateTime.parse(datewithT);
                                   Duration difference =
                                   DateTime.now().difference(timeScanned);
                                   int minutes = difference.inMinutes;
 
-                                  if (minutes > maxMinutes ||
-                                      !checkRoll(rollNumber)) {
+                                  //selectedID.toString() + "/" + selectedQuantity.toString() + "/" + FirebaseAuth.instance.currentUser.email
+                                  //Item ID + quantity + email
+                                  String itemID = qrScanRes.split("/")[0];
+                                  int quantity = int.parse(qrScanRes.split("/")[1]);
+                                  String email = qrScanRes.split("/")[2];
+
+                                  //TODO: remove roll number check
+                                  if (minutes > maxMinutes) {
                                     showDialog(
                                         context: context,
                                         builder: (context) {

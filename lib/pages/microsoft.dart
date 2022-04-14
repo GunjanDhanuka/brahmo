@@ -15,7 +15,7 @@ class MicrosoftLogin extends StatefulWidget {
 }
 
 class _MicrosoftLoginState extends State<MicrosoftLogin> {
-  late bool loading;
+  bool loading;
   @override
   void initState() {
     loading = false;
@@ -49,11 +49,11 @@ class _MicrosoftLoginState extends State<MicrosoftLogin> {
                   Container(
                     height: 50,
                   ),
-                  Image(
-                    image: AssetImage("assets/icons/iitg.png"),
-                    height: 300,
-                    width: MediaQuery.of(context).size.width-40>300?300:MediaQuery.of(context).size.width,
-                  ),
+                  // Image(
+                  //   image: AssetImage("assets/icons/iitg.png"),
+                  //   height: 300,
+                  //   width: MediaQuery.of(context).size.width-40>300?300:MediaQuery.of(context).size.width,
+                  // ),
                   MySpaces.vMediumGapInBetween,
                   TextButton(
                     onPressed: () {
@@ -70,17 +70,17 @@ class _MicrosoftLoginState extends State<MicrosoftLogin> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image(
-                          image: NetworkImage(
-                              'https://image.flaticon.com/icons/png/512/732/732221.png'),
-                          height: 25,
-                          width: 25,
-                        ),
+                        // Image(
+                        //   image: NetworkImage(
+                        //       'https://image.flaticon.com/icons/png/512/732/732221.png'),
+                        //   height: 25,
+                        //   width: 25,
+                        // ),
                         SizedBox(
                           width: 15,
                         ),
                         Text(
-                          'Login as Student',
+                          'Login as Boarder',
                           style: GoogleFonts.rubik(
                               color: Colors.indigo,
                               fontSize: 20,
@@ -100,16 +100,16 @@ class _MicrosoftLoginState extends State<MicrosoftLogin> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image(
-                          image: AssetImage('assets/icons/otp.png'),
-                          height: 25,
-                          width: 25,
-                        ),
+                        // Image(
+                        //   image: AssetImage('assets/icons/otp.png'),
+                        //   height: 25,
+                        //   width: 25,
+                        // ),
                         SizedBox(
                           width: 15,
                         ),
                         Text(
-                          'Login as Mess Manager',
+                          'Login as Security Guard',
                           style: GoogleFonts.rubik(
                               color: MyColors.white,
                               fontSize: 20,

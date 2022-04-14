@@ -5,14 +5,14 @@ import 'package:brahmo/globals/myColors.dart';
 import 'package:brahmo/globals/myFonts.dart';
 import 'package:brahmo/globals/mySpaces.dart';
 import 'package:brahmo/pages/homeManagement.dart';
-// import 'package:brahmo/widgets/getRowDetails.dart';
+import 'package:brahmo/widgets/getRowDetails.dart';
 
 // ignore: must_be_immutable
 class ShowScanDetails extends StatefulWidget {
   static String id = 'show-scan-details';
   String rollNumber = '';
 
-  ShowScanDetails({required this.rollNumber});
+  ShowScanDetails({@required this.rollNumber});
 
   @override
   _ShowScanDetailsState createState() =>
@@ -22,7 +22,7 @@ class ShowScanDetails extends StatefulWidget {
 class _ShowScanDetailsState extends State<ShowScanDetails> {
   String rollNumber = '';
 
-  _ShowScanDetailsState({required this.rollNumber});
+  _ShowScanDetailsState({@required this.rollNumber});
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +40,9 @@ class _ShowScanDetailsState extends State<ShowScanDetails> {
                   if (!snapshot.hasData)
                     return Center(child: CircularProgressIndicator());
                   else {
-                    String currentStatus;
+                    String currentStatus = "";
                     DateTime lastCheckoutTime = DateTime.now();
-                    int len = (snapshot.data.docs.length);
+                    int len = (snapshot.data?.docs.length);
                     bool exists = false;
                     for (int i = 0; i < len; i++) {
                       var v = snapshot.data?.docs[i];
